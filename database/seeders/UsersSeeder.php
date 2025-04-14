@@ -20,10 +20,19 @@ class UsersSeeder extends Seeder
             'email' => 'emelislamoski2@gmail.com',
             'password' => 'Emel123!',
         ]);
+        $user2 = User::factory()->create([
+            'first_name' => 'Emir',
+            'last_name' => 'Useinoski',
+            'email' => 'emir.useinoski@gmail.com',
+            'password' => 'Emir123!',
+        ]);
+
         $this->call([
             OrganizationSeeder::class,
         ]);
 
         $user->organizations()->attach([1, 2]);
+
+        $user2->organizations()->attach([3]);
     }
 }

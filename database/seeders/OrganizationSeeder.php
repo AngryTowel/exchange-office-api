@@ -25,5 +25,11 @@ class OrganizationSeeder extends Seeder
             'owner_id' => 1,
             'address' => 'Struga, Boris Kidric 6330'
         ]);
+        Organization::factory()->create([
+            'name' => 'Erda',
+            'exchange_id' => '33241233112',
+            'owner_id' => 2,
+            'address' => 'Struga, Boris Kidric 6330'
+        ]);
     }
 }
