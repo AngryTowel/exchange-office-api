@@ -41,8 +41,4 @@ interface AuthenticationServiceInterface
      *
      */
     public function updatePassword(ResetPasswordDTO $data);
-    /**
-     * Returns the authenticated user.
-     */
-    public function getAuthenticatedUser(): User;
 }

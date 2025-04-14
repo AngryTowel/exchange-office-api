@@ -5,6 +5,7 @@ namespace App\Repositories\User;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -45,5 +46,9 @@ class UserRepository extends BaseRepository
     public function listOrganisationUsers($organisation_id)
     {
         return $this->model::where('organisation_id', $organisation_id)->get();
+    }
+    public function getAuthenticatedUser(): User
+    {
+        return $this->model::with(['organizations.owner'])->find(Auth::user()->id);
     }
 }

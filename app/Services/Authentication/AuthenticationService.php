@@ -20,17 +20,17 @@ class AuthenticationService implements AuthenticationServiceInterface
     public function credentialsLogin(CredentialsDTO $credentials): TokenDTO
     {
         if (Auth::attempt(['email' => $credentials->email, 'password' => $credentials->password])) {
-            $user = $this->getAuthenticatedUser();
+            $user = $this->userRepository->getAuthenticatedUser();
 
             return $this->generateToken($user);
         } else {
-            abort(403, 'errors.auth.invalid_credentials');
+            abort(403, 'error.auth.invalid_credentials');
         }
     }
 
     public function logout(): bool
     {
-        $user = $this->getAuthenticatedUser();
+        $user = $this->userRepository->getAuthenticatedUser();
 
         return $user->currentAccessToken()->delete();
     }
@@ -63,11 +63,5 @@ class AuthenticationService implements AuthenticationServiceInterface
         $this->userRepository->updatePassword($user, $data->password);
 
         return true;
-    }
-    public function getAuthenticatedUser(): User
-    {
-        /** @var User $user */
-        $user = Auth::user();
-        return $user;
     }
 }

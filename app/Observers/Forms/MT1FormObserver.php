@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Observers\Forms;
+
+use App\Enums\Forms\TypesEnum;
+use App\Models\Form1KT;
+use App\Models\FormMT1;
+
+class MT1FormObserver
+{
+    /**
+     * Handle the FormMT1 "created" event.
+     * Automatically create a 1KT form with code 10 for buying and code 12 for selling
+     */
+    public function created(FormMT1 $formMT1): void
+    {
+        Form1KT::query()->create([
+            'organization_id' => $formMT1->organization_id,
+            'user_id' => $formMT1->user_id,
+            'document_no' => $formMT1->custom_id,
+            'description' => TypesEnum::toKT1(TypesEnum::from($formMT1->type)),
+            'currency_type' => $formMT1->currency_type,
+            'date_time' => $formMT1->date_time,
+            'exchange_amount_input' => TypesEnum::from($formMT1->type) === TypesEnum::buying ? $formMT1->exchange_amount : 0,
+            'exchange_amount_output' => TypesEnum::from($formMT1->type) === TypesEnum::selling ? $formMT1->exchange_amount : 0,
+            'course' => $formMT1->course,
+            'funds_type' => '',
+            'value_input' => TypesEnum::from($formMT1->type) === TypesEnum::buying ? 0 : $formMT1->value,
+            'value_output' => TypesEnum::from($formMT1->type) === TypesEnum::selling ? 0 : $formMT1->value,
+            'authorized_bank' => $formMT1->authorized_bank
+        ]);
+    }
+
+    /**
+     * Handle the FormMT1 "updated" event.
+     */
+    public function updated(FormMT1 $formMT1): void
+    {
+        //
+    }
+
+    /**
+     * Handle the FormMT1 "deleted" event.
+     */
+    public function deleted(FormMT1 $formMT1): void
+    {
+        //
+    }
+
+    /**
+     * Handle the FormMT1 "restored" event.
+     */
+    public function restored(FormMT1 $formMT1): void
+    {
+        //
+    }
+
+    /**
+     * Handle the FormMT1 "force deleted" event.
+     */
+    public function forceDeleted(FormMT1 $formMT1): void
+    {
+        //
+    }
+}
