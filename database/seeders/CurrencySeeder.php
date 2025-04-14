@@ -18,5 +18,6 @@ class CurrencySeeder extends Seeder
     {
         $this->organizationService->retrieveCurrenciesRates(1);
         $this->organizationService->retrieveCurrenciesRates(2);
+        $this->organizationService->retrieveCurrenciesRates(3);
     }
 }
