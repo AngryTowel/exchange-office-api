@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Currencies;
 
-use App\Rules\Currencies\CanUpdate;
+use App\Rules\Organizations\IsPartOfOrganization;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCurrenciesRequest extends FormRequest
+class ChangeOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,9 @@ class UpdateCurrenciesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            '*.name' => 'nullable|string',
-            '*.buying_rate' => 'nullable|numeric',
-            '*.selling_rate' => 'nullable|numeric',
-            '*.current_value' => 'nullable|numeric',
-            '*.id' => ['required', 'exists:currencies,id', new CanUpdate()],
+            'organization_id' => ['required', 'exists:organizations,id', new IsPartOfOrganization()],
+            'currencies' => ['required', 'array'],
+            'currencies.*' => ['required', 'exists:currencies,id'],
         ];
     }
 }

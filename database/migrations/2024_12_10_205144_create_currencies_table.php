@@ -17,8 +17,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('country');
             $table->string('currency')->nullable()->default(null);
-            $table->float('course');
+            $table->float('buying_rate');
+            $table->float('selling_rate');
             $table->boolean('isDefault')->default(false);
+            $table->unsignedInteger('order')->default(0);
             $table->foreignId('organization_id')->constrained(table: 'organizations');
             $table->timestamps();
         });

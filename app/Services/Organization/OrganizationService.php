@@ -27,11 +27,12 @@ class OrganizationService implements OrganizationServiceInterface
         $res = $this->http_service->get('https://www.nbrm.mk/KLServiceNOV/GetExchangeRate', $params);
 
         $this->setCurrencies([
-            'code' => 0,
+            'code' => 807,
             'name' => json_encode(['mk' => 'Денар', 'en' => 'Denar', 'al' => 'Denar']),
             'currency' => 'MKD',
             'country' => json_encode(['mk' => 'Северна Македонија', 'en' => 'North Macedonia', 'al' => 'Maqedonia']),
-            'course' => 1,
+            'buying_rate' => 1,
+            'selling_rate' => 1,
             'isDefault' => true,
             'organization_id' => $org_id
         ]);
@@ -42,7 +43,8 @@ class OrganizationService implements OrganizationServiceInterface
                 'name' => json_encode(['mk' => $item->nazivMak, 'en' => $item->nazivAng, 'al' => $item->nazivAl]),
                 'currency' => $item->oznaka,
                 'country' => json_encode(['mk' => $item->drzava, 'en' => $item->drzavaAng, 'al' => $item->drzavaAl]),
-                'course' => $item->sreden,
+                'buying_rate' => $item->sreden,
+                'selling_rate' => $item->sreden,
                 'organization_id' => $org_id
             ];
         })->toArray());

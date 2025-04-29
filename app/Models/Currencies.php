@@ -14,9 +14,11 @@ class Currencies extends Model
         'name',
         'country',
         'currency',
-        'course',
+        'buying_rate',
+        'selling_rate',
         'organization_id',
-        'isDefault'
+        'isDefault',
+        'order'
     ];
 
     protected $casts = [

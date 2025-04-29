@@ -36,4 +36,11 @@ interface CurrencyServiceInterface
      * @return LengthAwarePaginator
      */
     public function getHistories(array $data): LengthAwarePaginator;
+
+    /**
+     * Receives the array of ids and orders them in the exact order that the array has been received in.
+     * @param array $data
+     * @return mixed
+     */
+    public function updateOrder(array $data): mixed;
 }

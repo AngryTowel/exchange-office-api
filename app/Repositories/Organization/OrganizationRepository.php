@@ -28,7 +28,7 @@ class OrganizationRepository extends BaseRepository
                 'input' => 0,
                 'output' => 0,
                 'value' => $data['current_value'],
-                'created_at' => '1970-01-01 00:00:01', // Intentional setup to have it as the first ever entry if the user decides to put past dates in the forms.
+                'created_at' => null, // Intentional setup to have it as the first ever entry if the user decides to put past dates in the forms.
             ]);
         }
 

@@ -27,7 +27,7 @@ class KT1Resource extends JsonResource
             'currency_type' => $this->currency_type,
             'exchange_amount_input' => $this->exchange_amount_input,
             'exchange_amount_output' => $this->exchange_amount_output,
-            'course' => $this->course,
+            'rate' => $this->rate,
             'funds_type' => $this->funds_type,
             'value_input' => $this->value_input,
             'value_output' => $this->value_output,

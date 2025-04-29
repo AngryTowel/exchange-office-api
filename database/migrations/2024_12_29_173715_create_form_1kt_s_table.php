@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('currency_type');
             $table->float('exchange_amount_input')->default(0);
             $table->float('exchange_amount_output')->default(0);
-            $table->float('course');
+            $table->float('rate');
             $table->string('funds_type')->nullable();
             $table->float('value_input')->default(0);
             $table->float('value_output')->default(0);

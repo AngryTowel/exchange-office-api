@@ -23,7 +23,7 @@ return new class extends Migration
             $table->tinyInteger('type')->default(0)->comment('1 - Buying, 2 - Selling');
             $table->string('currency_type');
             $table->float('exchange_amount');
-            $table->float('course');
+            $table->float('rate');
             $table->float('value');
             $table->tinyInteger('residency')->comment('3 - Resident, 4 - Not Resident');
             $table->string('exchange_id')->nullable();

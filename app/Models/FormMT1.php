@@ -17,7 +17,7 @@ class FormMT1 extends Model
         'type',
         'currency_type',
         'exchange_amount',
-        'course',
+        'rate',
         'value',
         'residency',
         'exchange_id',

@@ -23,7 +23,7 @@ class MT1FormObserver
             'date_time' => $formMT1->date_time,
             'exchange_amount_input' => TypesEnum::from($formMT1->type) === TypesEnum::buying ? $formMT1->exchange_amount : 0,
             'exchange_amount_output' => TypesEnum::from($formMT1->type) === TypesEnum::selling ? $formMT1->exchange_amount : 0,
-            'course' => $formMT1->course,
+            'rate' => $formMT1->rate,
             'funds_type' => '',
             'value_input' => TypesEnum::from($formMT1->type) === TypesEnum::buying ? 0 : $formMT1->value,
             'value_output' => TypesEnum::from($formMT1->type) === TypesEnum::selling ? 0 : $formMT1->value,

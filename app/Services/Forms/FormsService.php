@@ -21,7 +21,7 @@ class FormsService implements FormsServiceInterface
     {
         $user = $this->user_repository->getAuthenticatedUser();
         $data['user_id'] = $user->id;
-        $data['value'] = $data['course'] * $data['exchange_amount'];
+        $data['value'] = $data['rate'] * $data['exchange_amount'];
 
         return $this->mt1_repository->create($data);
     }

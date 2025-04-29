@@ -24,7 +24,7 @@ class MT1Resource extends JsonResource
             'type' => $this->type,
             'currency_type' => $this->currency_type,
             'exchange_amount' => $this->exchange_amount,
-            'course' => $this->course,
+            'rate' => $this->rate,
             'value' => $this->value,
             'residency' => $this->residency,
             'exchange_id' => $this->exchange_id,

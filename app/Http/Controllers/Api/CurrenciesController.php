@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Currencies\ChangeOrderRequest;
 use App\Http\Requests\Currencies\GetCurrenciesRequest;
 use App\Http\Requests\Currencies\GetCurrencyValueHistoryRequest;
 use App\Http\Requests\Currencies\UpdateCurrenciesRequest;
@@ -25,7 +26,10 @@ class CurrenciesController extends Controller
     {
         return $this->respond(CurrenciesResource::collection($this->currency_service->updateCurrencies($request->validated())));
     }
-
+    public function order(ChangeOrderRequest $request): JsonResponse
+    {
+        return $this->respond(CurrenciesResource::collection($this->currency_service->updateOrder($request->validated())));
+    }
     public function getHistory(GetCurrencyValueHistoryRequest $request): JsonResponse
     {
         return $this->respond(CurrencyValueHistoryResource::collection($this->currency_service->getHistories($request->validated()))->response()->getData());

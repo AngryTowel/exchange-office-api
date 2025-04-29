@@ -22,7 +22,7 @@ class Form1KT extends Model
         'currency_type',
         'exchange_amount_input',
         'exchange_amount_output',
-        'course',
+        'rate',
         'funds_type',
         'value_input',
         'value_output',

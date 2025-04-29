@@ -49,6 +49,8 @@ class UserRepository extends BaseRepository
     }
     public function getAuthenticatedUser(): User
     {
-        return $this->model::with(['organizations.owner'])->find(Auth::user()->id);
+        /** @var User $user */
+        $user = Auth::user();
+        return $user->load(['organizations.owner']);
     }
 }

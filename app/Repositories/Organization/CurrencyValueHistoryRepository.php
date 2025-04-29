@@ -27,10 +27,17 @@ class CurrencyValueHistoryRepository extends BaseRepository
         if (!isset($history)) {
             /** @var Currencies $currency */
             $currency = $this->currencies_repository->findById($currency_id);
-            $prev_history = $currency->valueHistories()
+            $prev_history = $this->model::query()
+                ->where('currency_id', $currency_id)
                 ->whereDate('created_at', '<', Carbon::parse($date)->format('Y-m-d'))
                 ->latest()
                 ->first();
+            if (!isset($prev_history)) {
+                $prev_history = $this->model::query()
+                    ->where('currency_id', $currency_id)
+                    ->whereNull('created_at')
+                    ->first();
+            }
             $history = $this->model::query()
                 ->create([
                     'currency_id' => $currency_id,
@@ -59,17 +66,18 @@ class CurrencyValueHistoryRepository extends BaseRepository
         return $history;
     }
 
-    public function getByDate(string $from, string $to = null): Collection
+    public function getByDate(int $currency_id, string $from, string $to = null): Collection
     {
         return $this->model::query()
-            ->whereDate('created_at', '>=', Carbon::parse($from)->format('Y-m-d'))
+            ->where('currency_id', $currency_id)
+            ->whereDate('created_at', '>', Carbon::parse($from)->format('Y-m-d'))
             ->when($to, function ($query, $to) {
                 $query->whereDate('created_at', '<=', Carbon::parse($to)->format('Y-m-d'));
             })->get();
     }
     public function readjustCalculationByHistory(CurrencyValueHistory $history): Collection
     {
-        $histories = $this->getByDate($history->created_at);
+        $histories = $this->getByDate($history->currency_id, $history->created_at);
         $initial_value = $history->value;
         foreach ($histories as $h) {
             $h->initial_value = $initial_value;

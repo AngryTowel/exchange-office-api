@@ -48,4 +48,13 @@ class CurrencyService implements CurrencyServiceInterface
     {
         return $this->currency_value_history_repository->getByCurrency($data['id'], $data['from_date'], $data['to_date']);
     }
+
+    public function updateOrder(array $data): mixed
+    {
+        foreach ($data['currencies'] as $index => $currency) {
+            $this->currencies_repository->update($currency, ['order' => $index]);
+        }
+
+        return $this->currencies_repository->getAllCurrencies($data['organization_id']);
+    }
 }
