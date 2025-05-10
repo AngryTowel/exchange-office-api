@@ -90,12 +90,12 @@ class CurrencyValueHistoryRepository extends BaseRepository
 
         return $histories->fresh();
     }
-    public function getByCurrency(int $currency_id, string $from_date, string $to_date): LengthAwarePaginator
+    public function getByCurrency(array $currency_id, string $from_date): LengthAwarePaginator
     {
         return $this->model::query()
+            ->with('currency')
             ->whereDate('created_at', '>=', Carbon::parse($from_date)->format('Y-m-d'))
-            ->whereDate('created_at', '<=', Carbon::parse($to_date)->format('Y-m-d'))
-            ->where('currency_id', $currency_id)
+            ->whereIn('currency_id', $currency_id)
             ->orderBy('created_at', 'desc')
             ->paginate(15);
     }

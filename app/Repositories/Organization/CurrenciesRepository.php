@@ -22,6 +22,7 @@ class CurrenciesRepository extends BaseRepository
     public function getAllCurrencies(int $org_id)
     {
         return $this->model::where('organization_id', $org_id)
+            ->orderBy('isDefault', 'desc')
             ->orderBy('order')
             ->with('value')
             ->get();

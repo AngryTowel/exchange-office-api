@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Currencies;
+namespace App\Http\Requests\Forms;
 
-use App\Rules\Currencies\CanUpdate;
+use App\Models\FormMT1;
+use App\Rules\Forms\CanUpdate;
 use Illuminate\Foundation\Http\FormRequest;
 
-class GetCurrencyValueHistoryRequest extends FormRequest
+class UpdateMT1Request extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +24,8 @@ class GetCurrencyValueHistoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['required', 'array'], // The can update validator can be used to check if the user can access the resource
-            'id.*' => ['required', 'exists:currencies,id', new CanUpdate()],
-            'from_date' => ['required', 'date', 'date_format:Y-m-d'],
+            'id' => ['required', 'integer', 'exists:form_mt1_s,id', new CanUpdate(FormMT1::class)],
+            'custom_id' => ['integer']
         ];
     }
 }

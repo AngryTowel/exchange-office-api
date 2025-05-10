@@ -11,6 +11,7 @@ class FormMT1 extends Model
     protected $fillable = [
 //        'exchange_office',
         'user_id',
+        'custom_id',
         'organization_id',
         'authorized_bank',
         'date_time',

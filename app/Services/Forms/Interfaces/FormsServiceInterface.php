@@ -23,6 +23,12 @@ interface FormsServiceInterface
      */
     public function getMT1Forms(array $data): LengthAwarePaginator;
 
+    /**
+     * Accepts array of data in the form of UpdateMT1Request and updates the data before returning the model.
+     * @param array $data
+     * @return FormMT1
+     */
+    public function updateMT1Form(array $data): FormMT1;
 
     /**
      * Gets the organization id for the 1KT forms that need to be returned.

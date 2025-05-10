@@ -46,7 +46,7 @@ class CurrencyService implements CurrencyServiceInterface
 
     public function getHistories(array $data): LengthAwarePaginator
     {
-        return $this->currency_value_history_repository->getByCurrency($data['id'], $data['from_date'], $data['to_date']);
+        return $this->currency_value_history_repository->getByCurrency($data['id'], $data['from_date']);
     }
 
     public function updateOrder(array $data): mixed

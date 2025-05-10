@@ -17,7 +17,8 @@ class MT1Resource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->custom_id,
+            'id' => $this->id,
+            'custom_id' => $this->custom_id,
             'exchange_office' => new OrganizationResource($this->whenLoaded('organization')),
             'authorized_bank' => $this->authorized_bank,
             'date_time' => $this->date_time,

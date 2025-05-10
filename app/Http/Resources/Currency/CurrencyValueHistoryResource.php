@@ -21,6 +21,7 @@ class CurrencyValueHistoryResource extends JsonResource
             'input' => $this['input'],
             'output' => $this['output'],
             'value' => $this['value'],
+            'currency' => new CurrenciesResource($this->whenLoaded('currency')),
             'created_at' => $this['created_at'],
             'updated_at' => $this['updated_at'],
 

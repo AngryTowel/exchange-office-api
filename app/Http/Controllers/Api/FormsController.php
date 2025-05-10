@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Forms\Create1KTRequest;
 use App\Http\Requests\Forms\CreateMT1Request;
 use App\Http\Requests\Forms\GetFormsRequest;
+use App\Http\Requests\Forms\UpdateMT1Request;
 use App\Http\Resources\Forms\KT1Resource;
 use App\Http\Resources\Forms\MT1Resource;
 use App\Services\Forms\Interfaces\FormsServiceInterface;
@@ -23,6 +24,10 @@ class FormsController extends Controller
     public function createMT1(CreateMT1Request $request): JsonResponse
     {
         return $this->respond(new MT1Resource($this->forms_service->createMT1Form($request->validated())));
+    }
+    public function updateMT1(UpdateMT1Request $request): JsonResponse
+    {
+        return $this->respond(new MT1Resource($this->forms_service->updateMT1Form($request->validated())));
     }
     public function index1KT(GetFormsRequest $request): JsonResponse
     {

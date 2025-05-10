@@ -15,7 +15,7 @@ class CustomId
      * @param  Model  $model
      * @return void
      */
-    public function creating(Model $model)
+    public function creating(Model $model): void
     {
         $date = Carbon::now();
         if ($model instanceof FormMT1) {
