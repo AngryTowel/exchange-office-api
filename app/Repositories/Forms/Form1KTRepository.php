@@ -14,7 +14,7 @@ class Form1KTRepository extends BaseRepository
     {
         return $this->model::where('organization_id', $organization_id)
             ->whereDate('date_time', $date)
-            ->with('organization')->paginate(15);
+            ->with(['organization'])->paginate(15);
     }
 
 }

@@ -1,0 +1,18 @@
+body {
+    font-family: 'DejaVu Sans', sans-serif;
+    font-size: 14px;
+}
+.container { width: 100%; }
+.header { font-weight: bold; font-size: 16px; }
+.sub-header { font-weight: bold; padding-right: 12px; text-align: right; }
+.table { width: 100%; border-collapse: collapse; }
+.layout-fixed {table-layout: fixed;}
+.table th, .table td { border: 1px solid black; padding: 4px; text-align: left; font-size: 11px; vertical-align: top }
+.inner-cell { border-bottom: none !important;}
+.inner-cell:first-child {border-left: none !important}
+.inner-cell:last-child {border-right: none !important}
+.border-t-0 {border-top: none !important;}
+p {margin: 0}
+.p-0 {padding: 0 !important;}
+.border-0 {border: none !important;}
+.text-center {text-align: center !important;}

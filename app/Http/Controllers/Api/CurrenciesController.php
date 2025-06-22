@@ -6,17 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Currencies\ChangeOrderRequest;
 use App\Http\Requests\Currencies\GetCurrenciesRequest;
 use App\Http\Requests\Currencies\GetCurrencyValueHistoryRequest;
+use App\Http\Requests\Currencies\GetHistoryPDFRequest;
 use App\Http\Requests\Currencies\UpdateCurrenciesRequest;
 use App\Http\Resources\Currency\CurrenciesResource;
 use App\Http\Resources\Currency\CurrencyValueHistoryResource;
 use App\Services\Organization\Interfaces\CurrencyServiceInterface;
+use App\Services\PDF\Interfaces\PDFServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CurrenciesController extends Controller
 {
     public function __construct(
-        protected CurrencyServiceInterface $currency_service
+        protected CurrencyServiceInterface $currency_service,
+        protected PDFServiceInterface $pdf_service
     ) {}
     public function index(GetCurrenciesRequest $request): JsonResponse
     {
@@ -32,6 +36,10 @@ class CurrenciesController extends Controller
     }
     public function getHistory(GetCurrencyValueHistoryRequest $request): JsonResponse
     {
-        return $this->respond(CurrencyValueHistoryResource::collection($this->currency_service->getHistories($request->validated()))->response()->getData());
+        return $this->respond(CurrencyValueHistoryResource::collection($this->currency_service->getHistories($request->validated())));
+    }
+    public function getHistoryPDF(GetHistoryPDFRequest $request): Response
+    {
+        return $this->pdf_service->getHistoryPDF($request->validated());
     }
 }

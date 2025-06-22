@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests\Forms;
 
-use App\Models\FormMT1;
+use App\Models\Form1KT;
 use App\Rules\Forms\CanUpdate;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateMT1Request extends FormRequest
+class Delete1KTRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,13 @@ class UpdateMT1Request extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['required', 'integer', 'exists:form_mt1_s,id', new CanUpdate(FormMT1::class)],
-            'date_time' => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
-            'rate' => ['nullable', 'numeric', 'min:0'],
-            'exchange_amount' => ['nullable', 'numeric', 'min:0'],
-            'custom_id' => ['integer']
+            'id' => ['required', 'integer', 'exists:form_1kt_s,id', new CanUpdate(Form1KT::class)],
         ];
+    }
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'id' => $this->route('id')
+        ]);
     }
 }

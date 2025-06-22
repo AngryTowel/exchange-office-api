@@ -2,12 +2,8 @@
 
 namespace App\Observers\Forms;
 
-use App\Models\Currencies;
-use App\Models\CurrencyValueHistory;
 use App\Models\Form1KT;
-use App\Models\Organization;
 use App\Services\Organization\Interfaces\CurrencyServiceInterface;
-use Carbon\Carbon;
 
 class Form1KTObserver
 {
@@ -27,7 +23,12 @@ class Form1KTObserver
      */
     public function updated(Form1KT $form1KT): void
     {
-        //
+        if ($form1KT->wasChanged(['date_time', 'exchange_amount_input', 'exchange_amount_output', 'rate', 'value_input', 'value_output'])) {
+            $originalModel = new Form1KT();
+            $originalModel->forceFill($form1KT->getOriginal());
+            $this->currency_service->calculateHistoryFrom1KT($originalModel, reverse: true);
+            $this->currency_service->calculateHistoryFrom1KT($form1KT);
+        }
     }
 
     /**
@@ -35,7 +36,7 @@ class Form1KTObserver
      */
     public function deleted(Form1KT $form1KT): void
     {
-        //
+        $this->currency_service->calculateHistoryFrom1KT($form1KT, reverse: true);
     }
 
     /**

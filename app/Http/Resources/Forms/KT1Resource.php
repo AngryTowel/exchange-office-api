@@ -33,7 +33,8 @@ class KT1Resource extends JsonResource
             'value_output' => $this->value_output,
             'authorized_bank' => $this->authorized_bank,
             'user' => new UserResource($this->whenLoaded('user')),
-
+            'mt1' => new MT1Resource($this->whenLoaded('formMT1')),
+            'hasMT1' => $this->formMT1()->exists()
         ];
     }
 }

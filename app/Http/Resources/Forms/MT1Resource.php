@@ -29,7 +29,7 @@ class MT1Resource extends JsonResource
             'value' => $this->value,
             'residency' => $this->residency,
             'exchange_id' => $this->exchange_id,
-            'authorized_person' => $this->authorized_person
+            'authorized_person' => $this->authorized_person,
         ];
     }
 }

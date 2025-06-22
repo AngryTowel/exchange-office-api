@@ -9,6 +9,7 @@ use App\Repositories\Forms\FormMT1Repository;
 use App\Repositories\User\UserRepository;
 use App\Services\Forms\Interfaces\FormsServiceInterface;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class FormsService implements FormsServiceInterface
@@ -38,23 +39,35 @@ class FormsService implements FormsServiceInterface
         if (isset($data['custom_id'])) {
             $exists = $this->mt1_repository
                 ->findBy('custom_id', $data['custom_id'])
+                ->where('id', '!=', $mt1->id)
                 ->whereYear('date_time',  Carbon::createFromDate($mt1->date_time)->year)
                 ->exists();
             if ($exists) abort(403, 'errors.forms.custom_id.exists');
-            $kt1 = $this->kt1_repository
-                ->findBy('document_no', $mt1->custom_id)
-                ->whereYear('date_time', Carbon::createFromDate($mt1->date_time)->year)
-                ->first();
-
-            $kt1->document_no = $data['custom_id'];
-
-            $kt1->save();
         }
+
         $mt1->fill($data);
+
+        if (isset($data['exchange_amount']) || isset($data['rate'])) {
+            $data['value'] = $mt1->rate * $mt1->exchange_amount;
+            $mt1->fill($data);
+        }
         $mt1->save();
 
         return $mt1->fresh();
     }
+    public function deleteMT1Form(array $data): bool
+    {
+        $mt1 = $this->mt1_repository->findById($data['id']);
+
+        return $mt1->delete();
+    }
+    public function randomizeMT1(array $data): bool
+    {
+        // TODO: Implement randomizeMT1() method.
+        $data['user_id'] = $this->user_repository->getAuthenticatedUser()->id;
+        return $this->mt1_repository->createRandomMT1Form($data);
+    }
+
     public function get1KTForms(array $data): LengthAwarePaginator
     {
         return $this->kt1_repository->getFormsByOrganization($data['id'], $data['date']);
@@ -67,5 +80,11 @@ class FormsService implements FormsServiceInterface
 
         return $this->kt1_repository->create($data);
     }
+    public function delete1KTForm(array $data): bool
+    {
+        $kt1 = $this->kt1_repository->findById($data['id']);
+        if ($kt1->formMT1()->exists()) abort('403', 'errors.forms.kt1.mt_exists');
 
+        return $kt1->delete();
+    }
 }

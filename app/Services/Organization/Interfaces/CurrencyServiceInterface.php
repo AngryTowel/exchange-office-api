@@ -3,6 +3,7 @@
 namespace App\Services\Organization\Interfaces;
 
 use App\Models\Form1KT;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface CurrencyServiceInterface
@@ -28,14 +29,14 @@ interface CurrencyServiceInterface
      * @param Form1KT $form1KT
      * @return mixed
      */
-    public function calculateHistoryFrom1KT(Form1KT $form1KT): mixed;
+    public function calculateHistoryFrom1KT(Form1KT $form1KT, bool $reverse = false): mixed;
 
     /**
      * Accepts array of data with filter from, to date and currency id to get the history for that currency.
      * @param array $data
-     * @return LengthAwarePaginator
+     * @return Collection
      */
-    public function getHistories(array $data): LengthAwarePaginator;
+    public function getHistories(array $data): Collection;
 
     /**
      * Receives the array of ids and orders them in the exact order that the array has been received in.

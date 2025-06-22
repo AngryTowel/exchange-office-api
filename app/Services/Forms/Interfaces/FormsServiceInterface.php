@@ -31,6 +31,19 @@ interface FormsServiceInterface
     public function updateMT1Form(array $data): FormMT1;
 
     /**
+     * Accepts array of data in the form of DeleteMT1Request and deletes the data before returning the model.
+     * @param array $data
+     * @return bool
+     */
+    public function deleteMT1Form(array $data): bool;
+    /**
+     * Accepts array of data in the form of RandomizeMT1Request and creates forms for MT1 in random values for the given
+     * date period.
+     * @param array $data
+     * @return bool
+     */
+    public function randomizeMT1(array $data): bool;
+    /**
      * Gets the organization id for the 1KT forms that need to be returned.
      * @param array $data
      * @return LengthAwarePaginator
@@ -43,4 +56,11 @@ interface FormsServiceInterface
      * @return Form1KT
      */
     public function create1KTForm(array $data): Form1KT;
+
+    /**
+     * Accepts array of data in the form of Delete1KTRequest and updates the data before returning the model.
+     * @param array $data
+     * @return bool
+     */
+    public function delete1KTForm(array $data): bool;
 }

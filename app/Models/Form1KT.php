@@ -38,4 +38,9 @@ class Form1KT extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function formMT1(): BelongsTo
+    {
+        return $this->belongsTo(FormMT1::class, 'document_no', 'custom_id')
+            ->whereColumn('date_time', '=', 'form_mt1_s.date_time');
+    }
 }

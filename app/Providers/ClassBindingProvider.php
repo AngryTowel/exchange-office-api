@@ -12,6 +12,8 @@ use App\Services\Organization\CurrencyService;
 use App\Services\Organization\Interfaces\CurrencyServiceInterface;
 use App\Services\Organization\Interfaces\OrganizationServiceInterface;
 use App\Services\Organization\OrganizationService;
+use App\Services\PDF\Interfaces\PDFServiceInterface;
+use App\Services\PDF\PDFService;
 use App\Services\User\Interfaces\UserServiceInterface;
 use App\Services\User\UserService;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +27,7 @@ class ClassBindingProvider extends ServiceProvider
         OrganizationServiceInterface::class => OrganizationService::class,
         CurrencyServiceInterface::class => CurrencyService::class,
         FormsServiceInterface::class => FormsService::class,
+        PDFServiceInterface::class => PDFService::class,
     ];
     /**
      * Register services.

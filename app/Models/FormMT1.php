@@ -33,12 +33,16 @@ class FormMT1 extends Model
     protected function casts(): array
     {
         return [
-            'exchange_id' => 'encrypted'
+            'exchange_id' => 'encrypted',
         ];
     }
-
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);
+    }
+    public function form1KT(): BelongsTo
+    {
+        return $this->belongsTo(Form1KT::class, 'custom_id', 'document_no')
+            ->whereColumn('date_time', '=', 'form_1kt_s.date_time');
     }
 }

@@ -13,12 +13,10 @@ class CurrenciesRepository extends BaseRepository
     public function __construct(
         protected UserRepository $user_repository
     ) {}
-
     public function findByType(string $type, int $org_id): Currencies
     {
         return $this->model::query()->where('currency', $type)->where('organization_id', $org_id)->first();
     }
-
     public function getAllCurrencies(int $org_id)
     {
         return $this->model::where('organization_id', $org_id)
@@ -56,12 +54,17 @@ class CurrenciesRepository extends BaseRepository
 
         return $item->fresh()->load('value');
     }
-
     public function getMainCurrency(int $org_id): Currencies
     {
         return $this->model::query()
             ->where('organization_id', $org_id)
             ->where('isDefault', true)
             ->first();
+    }
+    public function getActiveCurrenciesQuery(int $org_id)
+    {
+        return $this->model::query()
+            ->where('organization_id', $org_id)
+            ->whereHas('valueHistories');
     }
 }

@@ -17,7 +17,6 @@ class CurrencyValueHistoryRepository extends BaseRepository
         protected CurrenciesRepository $currencies_repository
     ) {}
 
-
     public function getHistoryByCurrency(int $currency_id, string $date): CurrencyValueHistory
     {
         $history = $this->model::query()
@@ -50,9 +49,8 @@ class CurrencyValueHistoryRepository extends BaseRepository
                 ]);
         }
 
-        return $history;
+        return $history->load('currency');
     }
-
     public function updateHistoryCalculation(CurrencyValueHistory $history, int $input, int $output): CurrencyValueHistory
     {
         $history->input += $input;
@@ -65,7 +63,6 @@ class CurrencyValueHistoryRepository extends BaseRepository
 
         return $history;
     }
-
     public function getByDate(int $currency_id, string $from, string $to = null): Collection
     {
         return $this->model::query()
@@ -90,13 +87,20 @@ class CurrencyValueHistoryRepository extends BaseRepository
 
         return $histories->fresh();
     }
-    public function getByCurrency(array $currency_id, string $from_date): LengthAwarePaginator
+    public function getByCurrency(array $currency_id, string $from_date): Collection
     {
-        return $this->model::query()
-            ->with('currency')
-            ->whereDate('created_at', '>=', Carbon::parse($from_date)->format('Y-m-d'))
-            ->whereIn('currency_id', $currency_id)
-            ->orderBy('created_at', 'desc')
-            ->paginate(15);
+        $histories = new Collection();
+        foreach ($currency_id as $id) {
+            $history = $this->getHistoryByCurrency($id, $from_date);
+
+            $histories->push($history);
+        }
+
+        return $histories;
+    }
+    public function getHistoriesOfDate(int $organization_id, string $date): Collection
+    {
+        $ids = $this->currencies_repository->getActiveCurrenciesQuery($organization_id)->pluck('id')->toArray();
+        return $this->getByCurrency($ids, $date);
     }
 }

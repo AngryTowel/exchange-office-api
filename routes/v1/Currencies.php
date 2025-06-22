@@ -7,4 +7,5 @@ Route::prefix('/currencies')->middleware(['auth:sanctum'])->group(function () {
     Route::post('/order', [CurrenciesController::class, 'order'])->name('currencies.order');
 
     Route::post('/history', [CurrenciesController::class, 'getHistory'])->name('currencies.getHistory');
+    Route::post('/history/pdf', [CurrenciesController::class, 'getHistoryPDF'])->name('currencies.getHistoryPdf');
 });
