@@ -24,7 +24,7 @@ class Create1KTRequest extends FormRequest
     {
         return [
             'authorized_bank' => ['nullable'],
-            'document_no' => ['required'],
+            'document_no' => ['nullable'],
             'currency_type' => ['required', 'exists:currencies,currency'],
             'rate' => ['required', 'numeric', 'gte:0'],
             'organization_id' => ['required', new IsPartOfOrganization()],
