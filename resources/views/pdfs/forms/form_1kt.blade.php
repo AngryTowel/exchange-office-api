@@ -16,7 +16,7 @@
         </tr>
         <tr>
             <td colspan="10">
-{{--                Име на овластената банка: {{ $form_data->authorized_bank }} <br>--}}
+                Име на овластената банка: <br>
             </td>
         </tr>
         <tr>
