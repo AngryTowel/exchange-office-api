@@ -63,7 +63,6 @@ class FormsService implements FormsServiceInterface
     }
     public function randomizeMT1(array $data): bool
     {
-        // TODO: Implement randomizeMT1() method.
         $data['user_id'] = $this->user_repository->getAuthenticatedUser()->id;
         return $this->mt1_repository->createRandomMT1Form($data);
     }

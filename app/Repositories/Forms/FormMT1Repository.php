@@ -27,19 +27,6 @@ class FormMT1Repository extends BaseRepository
         $toDate = Carbon::parse($data['date_to']);
         $remaining = $data['exchange_total'];
 
-        if ($data['type'] == TypesEnum::buying->value) {
-            $c = Currencies::query()->where('organization_id', $data['organization_id'])->where('isDefault', true)->first();
-            if ($c->value->value < $remaining * $data['rate']) {
-                abort(405, 'errors.forms.randomize.main_value_insufficient');
-            }
-        } else {
-            $c = Currencies::query()->where('organization_id', $data['organization_id'])
-                ->where('currency', $data['currency_type'])->first();
-            if ($c->value->value < $remaining) {
-                abort(405, 'errors.forms.randomize.exchange_amount_insufficient');
-            }
-        }
-
         $period = CarbonPeriod::create($fromDate, $toDate);
         $datePlans = collect($period)->mapWithKeys(fn($d) => [$d->format('Y-m-d') => rand(5, 20)])->toArray();
 
