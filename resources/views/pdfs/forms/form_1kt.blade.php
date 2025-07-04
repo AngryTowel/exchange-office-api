@@ -7,16 +7,16 @@
 </head>
 <body>
 <div class="container">
-    <div class="header">Образец за книжење на трансакциите на ден {{ \Carbon\Carbon::createFromDate($form_data->date_time)->format('d-m-Y') }} бр. 1КТ</div>
+    <div class="header">Образец за книжење на трансакциите на ден {{ \Carbon\Carbon::createFromDate($date)->format('d-m-Y') }} бр. 1КТ</div>
     <table class="table layout-fixed">
         <tr>
-            <td colspan="3">Матичен број на овластениот менувач: <br><br> <p class="text-center">{{ $form_data->organization->exchange_id }}</p></td>
-            <td colspan="3">Име на овластениот менувач: <br><br> <p class="text-center">{{ $form_data->organization->name }}</p></td>
-            <td colspan="4">Адреса на менувачко место: <br><br> <p class="text-center">{{ $form_data->organization->address }}</p></td>
+            <td colspan="3">Матичен број на овластениот менувач: <br><br> <p class="text-center">{{ $organization->exchange_id }}</p></td>
+            <td colspan="3">Име на овластениот менувач: <br><br> <p class="text-center">{{ $organization->name }}</p></td>
+            <td colspan="4">Адреса на менувачко место: <br><br> <p class="text-center">{{ $organization->address }}</p></td>
         </tr>
         <tr>
             <td colspan="10">
-                Име на овластената банка: {{ $form_data->authorized_bank }} <br>
+{{--                Име на овластената банка: {{ $form_data->authorized_bank }} <br>--}}
             </td>
         </tr>
         <tr>
@@ -53,23 +53,25 @@
             <td class="text-center">9</td>
             <td class="text-center">10</td>
         </tr>
-        <tr>
-            <td class="text-center">{{ $form_data->custom_id }}</td>
-            <td class="text-center">{{ $form_data->document_no }}</td>
-            <td class="text-center">{{ $form_data->description }}</td>
-            <td class="text-center">{{ $form_data->currency_type }}</td>
-            <td class="text-center">{{ $form_data->rate }}</td>
-            <td class="text-center">{{ $form_data->funds_type }}</td>
-            <td class="text-center">{{ $form_data->exchange_amount_input }}</td>
-            <td class="text-center">{{ $form_data->exchange_amount_output }}</td>
-            <td class="text-center">{{ $form_data->value_input }}</td>
-            <td class="text-center">{{ $form_data->value_output }}</td>
-        </tr>
+        @foreach($forms as $form_data)
+            <tr>
+                <td class="text-center">{{ $form_data->custom_id }}</td>
+                <td class="text-center">{{ $form_data->document_no }}</td>
+                <td class="text-center">{{ $form_data->description }}</td>
+                <td class="text-center">{{ $form_data->currency_type }}</td>
+                <td class="text-center">{{ $form_data->rate }}</td>
+                <td class="text-center">{{ $form_data->funds_type }}</td>
+                <td class="text-center">{{ $form_data->exchange_amount_input }}</td>
+                <td class="text-center">{{ $form_data->exchange_amount_output }}</td>
+                <td class="text-center">{{ $form_data->value_input }}</td>
+                <td class="text-center">{{ $form_data->value_output }}</td>
+            </tr>
+        @endforeach
         <tr>
             <td colspan="10">Име презиме и потпис на овластеното лице: <br></td>
         </tr>
         <tr>
-            <td colspan="10">Име презиме и потпис на одговорното лице или на друго лице овластено од одговорното лице: <br> {{ $form_data->organization->owner->first_name }} {{ $form_data->organization->owner->last_name }}</td>
+            <td colspan="10">Име презиме и потпис на одговорното лице или на друго лице овластено од одговорното лице: <br> {{ $organization->owner->first_name }} {{ $organization->owner->last_name }}</td>
         </tr>
     </table>
 </div>
