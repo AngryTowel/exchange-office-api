@@ -23,8 +23,8 @@ interface PDFServiceInterface
 
     /**
      * Gets the id of the 1KT form and generates a pdf report of it.
-     * @param int $id
+     * @param array $data
      * @return Response
      */
-    public function get1KTPDF(int $id): Response;
+    public function get1KTPDF(array $data): Response;
 }

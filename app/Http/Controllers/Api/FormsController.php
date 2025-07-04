@@ -61,6 +61,6 @@ class FormsController extends Controller
     }
     public function pdfKT1(PdfMT1Request $request): Response
     {
-        return $this->pdf_service->get1KTPDF($request->get('id'));
+        return $this->pdf_service->get1KTPDF($request->validated());
     }
 }

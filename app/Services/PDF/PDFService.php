@@ -44,14 +44,20 @@ class PDFService implements PDFServiceInterface
 
         return $pdf->download('mt1_'.$form->custom_id.'_'.$form->date_time.'.pdf');
     }
-    public function get1KTPDF(int $id): Response
+    public function get1KTPDF(array $data): Response
     {
-        $form = $this->form_1kt_repo->findBy('id',$id)->with('organization.owner')->first();
+        $organization = $this->organization_repo->findById($data['organization_id']);
+        $forms = $this->form_1kt_repo->model::query()
+            ->whereDate('date_time', $data['date_time'])
+            ->where('organization_id', $data['organization_id'])
+            ->get();
 
         $pdf = Pdf::loadView('pdfs.forms.form_1kt', [
-            'form_data' => $form,
+            'forms' => $forms,
+            'organization' => $organization,
+            'date' => $data['date_time'],
         ]);
 
-        return $pdf->download('kt1_'.$form->custom_id.'_'.$form->date_time.'.pdf');
+        return $pdf->download('kt1_'.$data['date_time'].'_'.$organization->name.'.pdf');
     }
 }
