@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests\Forms;
 
-use App\Models\FormMT1;
-use App\Rules\Forms\CanUpdate;
+use App\Rules\Organizations\IsPartOfOrganization;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PdfMT1Request extends FormRequest
+class PdfKT1Request extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +23,8 @@ class PdfMT1Request extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['required', 'integer', 'exists:form_mt1_s,id', new CanUpdate(FormMT1::class)],
+            'date_time' => ['required', 'date_format:Y-m-d'],
+            'organization_id' => ['required', 'exists:organizations,id', new IsPartOfOrganization()],
         ];
     }
 }
