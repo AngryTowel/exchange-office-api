@@ -15,7 +15,7 @@
             <td colspan="2">Број на потврдата <br><br> <p class="text-center">{{ $form_data->custom_id }}</p></td>
             <td colspan="2">Датум и време <br><br> <p class="text-center">{{ \Carbon\Carbon::createFromDate($form_data->date_time)->format('d-m-Y H:i') }}</p></td>
             <td>Купувам <br><br> @if($form_data->type == 1) <p class="text-center">{{ $form_data->type }}</p> @endif</td>
-            <td>Продавам <br><br> @if($form_data->type == 2) <p class="text-center">{{ $form_data->type }}</p> @endif</td>
+            <td class="pl-0">Продавам <br><br> @if($form_data->type == 2) <p class="text-center">{{ $form_data->type }}</p> @endif</td>
         </tr>
     </table>
     <table class="table layout-fixed">

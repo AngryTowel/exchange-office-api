@@ -13,6 +13,6 @@ body {
 .inner-cell:last-child {border-right: none !important}
 .border-t-0 {border-top: none !important;}
 p {margin: 0}
-.p-0 {padding: 0 !important;}
+.p-0 {padding: 0 !important;} .pl-0 {padding-left: 0 !important;}
 .border-0 {border: none !important;}
 .text-center {text-align: center !important;}
