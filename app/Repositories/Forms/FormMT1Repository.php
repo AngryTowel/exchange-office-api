@@ -29,6 +29,7 @@ class FormMT1Repository extends BaseRepository
 
         $period = CarbonPeriod::create($fromDate, $toDate);
         $datePlans = collect($period)->mapWithKeys(fn($d) => [$d->format('Y-m-d') => rand(5, 20)])->toArray();
+        $data['currency_id'] = Currencies::query()->where('currency', $data['currency_type'])->where('organization_id', $data['organization_id'])->first()->id;
 
         while ($remaining > 0) {
             foreach ($datePlans as $date => $maxEntries) {
@@ -61,6 +62,7 @@ class FormMT1Repository extends BaseRepository
                         'authorized_bank' => $data['authorized_bank'],
                         'date_time' => $currentTime->copy(), // Use $currentTime->copy() to prevent Carbon reference mutation
                         'type' => $data['type'],
+                        'currency_id' => $data['currency_id'],
                         'currency_type' => $data['currency_type'],
                         'exchange_amount' => $amount,
                         'rate' => $rate,

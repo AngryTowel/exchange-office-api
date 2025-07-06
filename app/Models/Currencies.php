@@ -42,8 +42,7 @@ class Currencies extends Model
 
     public function kt1Forms(): HasMany
     {
-        return $this->hasMany(Form1KT::class, 'currency_type', 'currency')
-            ->whereColumn('organization_id', '=', 'form_1kt_s.organization_id');
+        return $this->hasMany(Form1KT::class, 'currency_id');
     }
 
 }

@@ -112,7 +112,7 @@ class CurrencyValueHistoryRepository extends BaseRepository
         $fromDate = Carbon::parse($date_from);
         $toDate = Carbon::parse($date_to);
 
-        $dates = CarbonPeriod::create($date_from, $date_to);
+        $dates = CarbonPeriod::create($fromDate, $toDate);
         // Foreach is used to ensure value histories are created for these dates even if no transactions happened in between
         foreach ($dates as $date) {
             $this->getHistoriesOfDate($organization_id, $date->format('Y-m-d'));
@@ -121,10 +121,12 @@ class CurrencyValueHistoryRepository extends BaseRepository
             ->getActiveCurrenciesQuery($organization_id)
             ->with(['valueHistories' => function ($query) use ($date_from, $date_to) {
                     $query->whereDate('created_at', '>=', $date_from)
-                        ->whereDate('created_at', '<=', $date_to);
+                        ->whereDate('created_at', '<=', $date_to)
+                    ->orderBy('created_at');
                 },
                 'kt1Forms' => function ($query) use ($date_from, $date_to) {
-                    $query->whereDate('date_time', '>=', $date_from)
+                    $query
+                        ->whereDate('date_time', '>=', $date_from)
                         ->whereDate('date_time', '<=', $date_to);
             }])
             ->withSum(['kt1Forms as total_input_residents' => function ($query) use ($date_from, $date_to) {

@@ -26,7 +26,9 @@ class Form1KT extends Model
         'funds_type',
         'value_input',
         'value_output',
-        'authorized_bank'
+        'authorized_bank',
+        'currency_id',
+        'form_mt1_id'
     ];
 
     public function organization(): BelongsTo
@@ -40,7 +42,6 @@ class Form1KT extends Model
     }
     public function formMT1(): BelongsTo
     {
-        return $this->belongsTo(FormMT1::class, 'document_no', 'custom_id')
-            ->whereColumn('date_time', '=', 'form_mt1_s.date_time');
+        return $this->belongsTo(FormMT1::class, 'form_mt1_id');
     }
 }

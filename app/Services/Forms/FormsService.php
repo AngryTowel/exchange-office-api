@@ -6,6 +6,7 @@ use App\Models\Form1KT;
 use App\Models\FormMT1;
 use App\Repositories\Forms\Form1KTRepository;
 use App\Repositories\Forms\FormMT1Repository;
+use App\Repositories\Organization\CurrenciesRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\Forms\Interfaces\FormsServiceInterface;
 use Carbon\Carbon;
@@ -17,13 +18,15 @@ class FormsService implements FormsServiceInterface
     public function __construct(
         protected FormMT1Repository $mt1_repository,
         protected Form1KTRepository $kt1_repository,
-        protected UserRepository $user_repository
+        protected UserRepository $user_repository,
+        protected CurrenciesRepository $currency_repository
     ) {}
     public function createMT1Form(array $data): FormMT1
     {
         $user = $this->user_repository->getAuthenticatedUser();
         $data['user_id'] = $user->id;
         $data['value'] = $data['rate'] * $data['exchange_amount'];
+        $data['currency_id'] = $this->currency_repository->findByType($data['currency_type'], $data['organization_id'])->id;
 
         return $this->mt1_repository->create($data);
     }
@@ -51,6 +54,10 @@ class FormsService implements FormsServiceInterface
             $data['value'] = $mt1->rate * $mt1->exchange_amount;
             $mt1->fill($data);
         }
+        if (isset($data['currency_type'])) {
+            $data['currency_type'] = $this->currency_repository->findByType($data['type'], $mt1->organization_id)->id;
+            $mt1->fill($data);
+        }
         $mt1->save();
 
         return $mt1->fresh();
@@ -76,6 +83,7 @@ class FormsService implements FormsServiceInterface
     {
         $user = $this->user_repository->getAuthenticatedUser();
         $data['user_id'] = $user->id;
+        $data['currency_id'] = $this->currency_repository->findByType($data['currency_type'], $data['organization_id'])->id;
 
         return $this->kt1_repository->create($data);
     }

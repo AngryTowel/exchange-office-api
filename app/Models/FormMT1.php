@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class FormMT1 extends Model
 {
@@ -13,6 +14,7 @@ class FormMT1 extends Model
         'user_id',
         'custom_id',
         'organization_id',
+        'currency_id',
         'authorized_bank',
         'date_time',
         'type',
@@ -40,9 +42,8 @@ class FormMT1 extends Model
     {
         return $this->belongsTo(Organization::class);
     }
-    public function form1KT(): BelongsTo
+    public function form1KT(): HasOne
     {
-        return $this->belongsTo(Form1KT::class, 'custom_id', 'document_no')
-            ->whereColumn('date_time', '=', 'form_1kt_s.date_time');
+        return $this->hasOne(Form1KT::class, 'form_mt1_id');
     }
 }

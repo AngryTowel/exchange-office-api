@@ -21,6 +21,8 @@ class MT1FormObserver
             'document_no' => $formMT1->custom_id,
             'description' => TypesEnum::toKT1(TypesEnum::from($formMT1->type)),
             'currency_type' => $formMT1->currency_type,
+            'currency_id' => $formMT1->currency_id,
+            'form_mt1_id' => $formMT1->id,
             'date_time' => $formMT1->date_time,
             'exchange_amount_input' => TypesEnum::from($formMT1->type) === TypesEnum::buying ? $formMT1->exchange_amount : 0,
             'exchange_amount_output' => TypesEnum::from($formMT1->type) === TypesEnum::selling ? $formMT1->exchange_amount : 0,
@@ -50,6 +52,7 @@ class MT1FormObserver
             'document_no' => $formMT1->custom_id,
             'description' => TypesEnum::toKT1(TypesEnum::from($formMT1->type)),
             'currency_type' => $formMT1->currency_type,
+            'currency_id' => $formMT1->currency_id,
             'date_time' => $formMT1->date_time,
             'exchange_amount_input' => TypesEnum::from($formMT1->type) === TypesEnum::buying ? $formMT1->exchange_amount : 0,
             'exchange_amount_output' => TypesEnum::from($formMT1->type) === TypesEnum::selling ? $formMT1->exchange_amount : 0,
@@ -66,8 +69,7 @@ class MT1FormObserver
     public function deleted(FormMT1 $formMT1): void
     {
         Form1KT::query()
-            ->where('document_no', $formMT1->custom_id)
-            ->whereYear('date_time', Carbon::createFromDate($formMT1->date_time)->year)
+            ->where('form_mt1_id', $formMT1->id)
             ->first()
             ->delete();
     }
