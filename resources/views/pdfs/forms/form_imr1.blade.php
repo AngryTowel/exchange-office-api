@@ -75,20 +75,20 @@
         @foreach($currencies as $currency)
             <tr>
                 <td class="text-center">{{ $currency->currency }}</td>
-                <td class="text-center">{{ $currency->valueHistories?->first()->initial_value  ?? 0 }}</td>
-                <td class="text-center">{{ $currency->total_input_residents ?? 0 }}</td>
-                <td class="text-center">{{ $currency->total_input_non_residents ?? 0 }}</td>
+                <td class="text-center">{{ $currency->valueHistories?->first()->initial_value }}</td>
+                <td class="text-center">{{ $currency->total_input_residents }}</td>
+                <td class="text-center">{{ $currency->total_input_non_residents }}</td>
                 <td class="text-center"></td>
                 <td class="text-center"></td>
                 <td class="text-center">{{ $currency->average_buy_rate }}</td>
                 <td class="text-center">@if($currency->isDefault){{ $currency->valueHistories?->sum('input') }} @endif</td>
-                <td class="text-center">{{ $currency->total_output_residents ?? 0 }}</td>
-                <td class="text-center">{{ $currency->total_output_non_residents ?? 0 }}</td>
-                <td class="text-center">{{ $currency->total_output_banks  ?? 0 }}</td>
+                <td class="text-center">{{ $currency->total_output_residents }}</td>
+                <td class="text-center">{{ $currency->total_output_non_residents }}</td>
+                <td class="text-center">{{ $currency->total_output_banks }}</td>
                 <td class="text-center"></td>
                 <td class="text-center">{{ $currency->average_sell_rate }}</td>
                 <td class="text-center">@if($currency->isDefault){{ $currency->valueHistories?->sum('output') }} @endif</td>
-                <td class="text-center">{{ $currency->valueHistories?->last()->value ?? 0 }}</td>
+                <td class="text-center">{{ $currency->valueHistories?->last()->value }}</td>
             </tr>
         @endforeach
         <tr>

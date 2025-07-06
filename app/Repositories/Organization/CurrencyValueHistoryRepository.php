@@ -8,6 +8,7 @@ use App\Models\Currencies;
 use App\Models\CurrencyValueHistory;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -107,6 +108,15 @@ class CurrencyValueHistoryRepository extends BaseRepository
     }
     public function prepareForIMR1(int $organization_id, string $date_from, string $date_to): Collection
     {
+
+        $fromDate = Carbon::parse($date_from);
+        $toDate = Carbon::parse($date_to);
+
+        $dates = CarbonPeriod::create($date_from, $date_to);
+        // Foreach is used to ensure value histories are created for these dates even if no transactions happened in between
+        foreach ($dates as $date) {
+            $this->getHistoriesOfDate($organization_id, $date->format('Y-m-d'));
+        }
         return $this->currencies_repository
             ->getActiveCurrenciesQuery($organization_id)
             ->with(['valueHistories' => function ($query) use ($date_from, $date_to) {
