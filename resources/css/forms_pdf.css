@@ -1,17 +1,31 @@
 body {
     font-family: 'DejaVu Sans', sans-serif;
     font-size: 14px;
+    text-wrap: wrap;
 }
 .container { width: 100%; }
 .header { font-weight: bold; font-size: 16px; }
 .sub-header { font-weight: bold; padding-right: 12px; text-align: right; }
 .table { width: 100%; border-collapse: collapse; }
 .layout-fixed {table-layout: fixed;}
-.table th, .table td { border: 1px solid black; padding: 4px; text-align: left; font-size: 11px; vertical-align: top }
+.table th, .table td {
+    border: 1px solid black;
+    padding: 4px;
+    text-align: left;
+    font-size: 11px;
+    vertical-align: top;
+    overflow-wrap: break-word; /* Allows breaking long words */
+    word-wrap: break-word;     /* Legacy support */
+    hyphens: manual;             /* Enables hyphenation */
+    white-space: normal;
+}
 .inner-cell { border-bottom: none !important;}
 .inner-cell:first-child {border-left: none !important}
 .inner-cell:last-child {border-right: none !important}
 .border-t-0 {border-top: none !important;}
+.border-l-0 {border-left: none !important;}
+.border-r-0 {border-right: none !important;}
+.border-b-0 {border-bottom: none !important;}
 p {margin: 0}
 .p-0 {padding: 0 !important;} .pl-0 {padding-left: 0 !important;}
 .border-0 {border: none !important;}

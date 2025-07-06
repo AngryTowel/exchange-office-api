@@ -40,4 +40,10 @@ class Currencies extends Model
             ->latestOfMany();
     }
 
+    public function kt1Forms(): HasMany
+    {
+        return $this->hasMany(Form1KT::class, 'currency_type', 'currency')
+            ->whereRaw('organization_id = form_1kt_s.organization_id');
+    }
+
 }

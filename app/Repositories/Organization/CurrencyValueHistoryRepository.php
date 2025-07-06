@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Organization;
 
+use App\Enums\Forms\ResidencyEnum;
+use App\Enums\Forms\TypesEnum;
 use App\Models\Currencies;
 use App\Models\CurrencyValueHistory;
 use App\Repositories\BaseRepository;
@@ -102,5 +104,79 @@ class CurrencyValueHistoryRepository extends BaseRepository
     {
         $ids = $this->currencies_repository->getActiveCurrenciesQuery($organization_id)->pluck('id')->toArray();
         return $this->getByCurrency($ids, $date);
+    }
+    public function prepareForIMR1(int $organization_id, string $date_from, string $date_to): Collection
+    {
+        return $this->currencies_repository
+            ->getActiveCurrenciesQuery($organization_id)
+            ->with(['valueHistories' => function ($query) use ($date_from, $date_to) {
+                    $query->whereDate('created_at', '>=', $date_from)
+                        ->whereDate('created_at', '<=', $date_to);
+                },
+                'kt1Forms' => function ($query) use ($date_from, $date_to) {
+                    $query->whereDate('date_time', '>=', $date_from)
+                        ->whereDate('date_time', '<=', $date_to);
+            }])
+            ->withSum(['kt1Forms as total_input_residents' => function ($query) use ($date_from, $date_to) {
+                $query
+                    ->whereHas('formMT1', function ($q) {
+                        $q->where('residency', ResidencyEnum::resident->value);
+                    })
+                    ->whereDate('date_time', '>=', $date_from)
+                    ->whereDate('date_time', '<=', $date_to);
+            }], 'exchange_amount_input')
+            ->withSum(['kt1Forms as total_input_non_residents' => function ($query) use ($date_from, $date_to) {
+                $query
+                    ->whereHas('formMT1', function ($q) {
+                        $q->where('residency', ResidencyEnum::non_resident->value);
+                    })
+                    ->whereDate('date_time', '>=', $date_from)
+                    ->whereDate('date_time', '<=', $date_to);
+            }], 'exchange_amount_input')
+            ->withSum(['kt1Forms as total_output_residents' => function ($query) use ($date_from, $date_to) {
+                $query
+                    ->whereHas('formMT1', function ($q) {
+                        $q->where('residency', ResidencyEnum::resident->value);
+                    })
+                    ->whereDate('date_time', '>=', $date_from)
+                    ->whereDate('date_time', '<=', $date_to);
+            }], 'exchange_amount_output')
+            ->withSum(['kt1Forms as total_output_non_residents' => function ($query) use ($date_from, $date_to) {
+                $query
+                    ->whereHas('formMT1', function ($q) {
+                        $q->where('residency', ResidencyEnum::non_resident->value);
+                    })
+                    ->whereDate('date_time', '>=', $date_from)
+                    ->whereDate('date_time', '<=', $date_to);
+            }], 'exchange_amount_output')
+            ->withSum(['kt1Forms as total_output_banks' => function ($query) use ($date_from, $date_to) {
+                $query
+                    ->where('description', '19') // KT1 for outputing value to the banks
+                    ->whereDate('date_time', '>=', $date_from)
+                    ->whereDate('date_time', '<=', $date_to);
+            }], 'exchange_amount_output')
+            ->withSum(['kt1Forms as total_input_amount' => function ($query) use ($date_from, $date_to) {
+                $query
+                    ->whereDate('date_time', '>=', $date_from)
+                    ->whereDate('date_time', '<=', $date_to);
+            }], 'value_input')
+            ->withSum(['kt1Forms as total_output_amount' => function ($query) use ($date_from, $date_to) {
+                $query
+                    ->whereDate('date_time', '>=', $date_from)
+                    ->whereDate('date_time', '<=', $date_to);
+            }], 'value_output')
+            ->withAvg(['kt1Forms as average_buy_rate' => function ($query) use ($date_from, $date_to) {
+                $query
+                    ->where('description', TypesEnum::toKT1(TypesEnum::buying))
+                    ->whereDate('date_time', '>=', $date_from)
+                    ->whereDate('date_time', '<=', $date_to);
+            }], 'rate')
+            ->withAvg(['kt1Forms as average_sell_rate' => function ($query) use ($date_from, $date_to) {
+                $query
+                    ->where('description', TypesEnum::toKT1(TypesEnum::selling))
+                    ->whereDate('date_time', '>=', $date_from)
+                    ->whereDate('date_time', '<=', $date_to);
+            }], 'rate')
+            ->get();
     }
 }

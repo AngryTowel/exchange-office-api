@@ -22,9 +22,16 @@ interface PDFServiceInterface
     public function getMT1PDF(int $id): Response;
 
     /**
-     * Gets the id of the 1KT form and generates a pdf report of it.
+     * Gets the date of the 1KT forms and generates a pdf report of all of them.
      * @param array $data
      * @return Response
      */
     public function get1KTPDF(array $data): Response;
+    /**
+     * Gets a date range and generate IMR1 form for that period.
+     * @param array $data
+     * @return Response
+     */
+    public function getIMR1PDF(array $data): Response;
+
 }

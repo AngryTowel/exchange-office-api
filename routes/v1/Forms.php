@@ -15,4 +15,6 @@ Route::prefix('forms')->middleware(['auth:sanctum'])->group(function () {
     Route::post('/kt1', [FormsController::class, 'create1KT'])->name('forms.create1KT');
     Route::delete('/kt1/{id}', [FormsController::class, 'delete1KT'])->name('forms.delete1KT');
     Route::post('/kt1/pdf', [FormsController::class, 'pdfKT1'])->name('forms.pdfKT1');
+
+    Route::post('/imr1/pdf', [FormsController::class, 'pdfIMR1'])->name('forms.imrKT1');
 });

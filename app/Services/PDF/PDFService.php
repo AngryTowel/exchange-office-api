@@ -62,4 +62,17 @@ class PDFService implements PDFServiceInterface
 
         return $pdf->download('kt1_'.$data['date_time'].'_'.$organization->name.'.pdf');
     }
+    public function getIMR1PDF(array $data): Response
+    {
+        $organization = $this->organization_repo->findById($data['organization_id']);
+        $currencies = $this->history_repo->prepareForIMR1($data['organization_id'], $data['date_from'], $data['date_to']);
+        $pdf = Pdf::loadView('pdfs.forms.form_imr1', [
+            'organization' => $organization,
+            'currencies' => $currencies,
+            'date_from' => $data['date_from'],
+            'date_to' => $data['date_to']
+        ])->setPaper('A4', 'landscape');
+
+        return $pdf->download('imr1_'.$data['date_from'].'-'.$data['date_to'].'_'.$organization->name.'.pdf');
+    }
 }

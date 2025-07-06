@@ -8,6 +8,7 @@ use App\Http\Requests\Forms\CreateMT1Request;
 use App\Http\Requests\Forms\Delete1KTRequest;
 use App\Http\Requests\Forms\DeleteMT1Request;
 use App\Http\Requests\Forms\GetFormsRequest;
+use App\Http\Requests\Forms\PdfIMR1Request;
 use App\Http\Requests\Forms\PdfKT1Request;
 use App\Http\Requests\Forms\PdfMT1Request;
 use App\Http\Requests\Forms\RandomizeMT1Request;
@@ -63,5 +64,11 @@ class FormsController extends Controller
     public function pdfKT1(PdfKT1Request $request): Response
     {
         return $this->pdf_service->get1KTPDF($request->validated());
+    }
+
+    public function pdfIMR1(PdfIMR1Request $request): Response
+    {
+        return $this->pdf_service->getIMR1PDF($request->validated());
+
     }
 }
