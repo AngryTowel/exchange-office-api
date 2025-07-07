@@ -68,12 +68,18 @@ class MT1FormObserver
      */
     public function deleted(FormMT1 $formMT1): void
     {
+        //
+    }
+    /**
+     * Handle the FormMT1 "deleting" event.
+     */
+    public function deleting(FormMT1 $formMT1): void
+    {
         Form1KT::query()
             ->where('form_mt1_id', $formMT1->id)
             ->first()
             ->delete();
     }
-
     /**
      * Handle the FormMT1 "restored" event.
      */

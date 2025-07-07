@@ -37,7 +37,7 @@ class Currencies extends Model
     public function value(): HasOne
     {
         return $this->hasOne(CurrencyValueHistory::class, 'currency_id')
-            ->latestOfMany();
+            ->latestOfMany('created_at');
     }
 
     public function kt1Forms(): HasMany
