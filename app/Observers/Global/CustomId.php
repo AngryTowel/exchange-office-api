@@ -24,7 +24,7 @@ class CustomId
                 ->max('custom_id');
         } else if ($model instanceof Form1KT) {
             $maxCustomId = $model::where('organization_id', $model->organization_id)
-                ->whereDate('date_time', $date)
+                ->whereDate('date_time', $date->format('Y-m-d'))
                 ->max('custom_id');
         } else {
             $maxCustomId = $model::where('organization_id', $model->organization_id)
