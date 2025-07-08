@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="header text-center">Образец ИМР1 - Извештај за прометот остварен од менувачко работење за периодот од до, во оригинална валута</div>
+    <div class="header text-center">Образец ИМР1 - Извештај за прометот остварен од менувачко работење за периодот од {{ $date_from }} до {{ $date_to }}, во оригинална валута</div>
     <table class="table layout-fixed">
         <tr>
             <td colspan="1"></td>

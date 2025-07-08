@@ -8,6 +8,7 @@ use App\Repositories\Organization\CurrencyValueHistoryRepository;
 use App\Repositories\Organization\OrganizationRepository;
 use App\Services\PDF\Interfaces\PDFServiceInterface;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Response;
 
 class PDFService implements PDFServiceInterface
@@ -69,8 +70,8 @@ class PDFService implements PDFServiceInterface
         $pdf = Pdf::loadView('pdfs.forms.form_imr1', [
             'organization' => $organization,
             'currencies' => $currencies,
-            'date_from' => $data['date_from'],
-            'date_to' => $data['date_to']
+            'date_from' => Carbon::parse($data['date_from'])->format('d-m-Y'),
+            'date_to' => Carbon::parse($data['date_to'])->format('d-m-Y')
         ])->setPaper('A4', 'landscape');
 
         return $pdf->download('imr1_'.$data['date_from'].'-'.$data['date_to'].'_'.$organization->name.'.pdf');
