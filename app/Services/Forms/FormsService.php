@@ -87,6 +87,11 @@ class FormsService implements FormsServiceInterface
 
         return $this->kt1_repository->create($data);
     }
+    public function update1KTForm(array $data): Form1KT
+    {
+        return $this->kt1_repository->update($data['id'], $data);
+    }
+
     public function delete1KTForm(array $data): bool
     {
         $kt1 = $this->kt1_repository->findById($data['id']);

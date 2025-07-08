@@ -17,14 +17,13 @@ class CustomId
      */
     public function creating(Model $model): void
     {
-        $date = Carbon::now();
         if ($model instanceof FormMT1) {
             $maxCustomId = $model::query()->where('organization_id', $model->organization_id)
-                ->whereYear('date_time', $date->year)
+                ->whereYear('date_time', Carbon::parse($model->date_time)->year)
                 ->max('custom_id');
         } else if ($model instanceof Form1KT) {
             $maxCustomId = $model::where('organization_id', $model->organization_id)
-                ->whereDate('date_time', $date->format('Y-m-d'))
+                ->whereDate('date_time', Carbon::parse($model->date_time)->format('Y-m-d'))
                 ->max('custom_id');
         } else {
             $maxCustomId = $model::where('organization_id', $model->organization_id)

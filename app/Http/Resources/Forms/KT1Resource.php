@@ -19,7 +19,7 @@ class KT1Resource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'custom_identifier' => $this->custom_id,
+            'custom_id' => $this->custom_id,
             'exchange_office' => new OrganizationResource($this->whenLoaded('organization')),
             'date_time' => $this->date_time,
             'document_no' => $this->document_no,

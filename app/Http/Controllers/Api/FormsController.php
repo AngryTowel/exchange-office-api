@@ -12,6 +12,7 @@ use App\Http\Requests\Forms\PdfIMR1Request;
 use App\Http\Requests\Forms\PdfKT1Request;
 use App\Http\Requests\Forms\PdfMT1Request;
 use App\Http\Requests\Forms\RandomizeMT1Request;
+use App\Http\Requests\Forms\UpdateKT1Request;
 use App\Http\Requests\Forms\UpdateMT1Request;
 use App\Http\Resources\Forms\KT1Resource;
 use App\Http\Resources\Forms\MT1Resource;
@@ -56,6 +57,10 @@ class FormsController extends Controller
     public function create1KT(Create1KTRequest $request): JsonResponse
     {
         return $this->respond(new KT1Resource($this->forms_service->create1KTForm($request->validated())));
+    }
+    public function update1KT(UpdateKT1Request $request): JsonResponse
+    {
+        return $this->respond(new KT1Resource($this->forms_service->update1KTForm($request->validated())));
     }
     public function delete1KT(Delete1KTRequest $request): JsonResponse
     {

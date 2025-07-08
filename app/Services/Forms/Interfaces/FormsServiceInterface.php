@@ -58,6 +58,13 @@ interface FormsServiceInterface
     public function create1KTForm(array $data): Form1KT;
 
     /**
+     * Update 1KT form from the data sent as array and return the model of it.
+     * @param array $data
+     * @return Form1KT
+     */
+    public function update1KTForm(array $data): Form1KT;
+
+    /**
      * Accepts array of data in the form of Delete1KTRequest and updates the data before returning the model.
      * @param array $data
      * @return bool

@@ -13,6 +13,7 @@ Route::prefix('forms')->middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/kt1', [FormsController::class, 'index1KT'])->name('forms.index1KT');
     Route::post('/kt1', [FormsController::class, 'create1KT'])->name('forms.create1KT');
+    Route::put('/kt1', [FormsController::class, 'update1KT'])->name('forms.update1KT');
     Route::delete('/kt1/{id}', [FormsController::class, 'delete1KT'])->name('forms.delete1KT');
     Route::post('/kt1/pdf', [FormsController::class, 'pdfKT1'])->name('forms.pdfKT1');
 
