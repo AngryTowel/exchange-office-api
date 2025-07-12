@@ -41,8 +41,7 @@ class PDFService implements PDFServiceInterface
 
         $pdf = Pdf::loadView('pdfs.forms.form_mt1', [
             'form_data' => $form,
-        ])
-            ->setPaper('A5', 'landscape');
+        ]);
 //            ->setPaper([0, 0, 535.24, 304.33]);
 
         return $pdf->download('mt1_'.$form->custom_id.'_'.$form->date_time.'.pdf');
