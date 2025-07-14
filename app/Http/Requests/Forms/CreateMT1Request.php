@@ -4,7 +4,6 @@ namespace App\Http\Requests\Forms;
 
 use App\Enums\Forms\ResidencyEnum;
 use App\Enums\Forms\TypesEnum;
-use App\Rules\Forms\NeedsId;
 use App\Rules\Organizations\IsPartOfOrganization;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -48,7 +47,7 @@ class CreateMT1Request extends FormRequest
             if ($exchangeAmount !== null && $rate !== null) {
                 $total = $exchangeAmount * $rate;
 
-                if ($total >= 30000) {
+                if ($total >= 30000 && empty($this->input('exchange_id'))) {
                     $validator->errors()->add('exchange_id', 'errors.forms.id_required');
                 }
             }
