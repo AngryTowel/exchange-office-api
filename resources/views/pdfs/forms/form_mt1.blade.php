@@ -29,7 +29,7 @@
     <table class="table layout-fixed">
         <tr>
             <td colspan="2">Резидент/нерезидент <br><br> <p class="text-center">{{ $form_data->residency }}</p></td>
-            <td colspan="2">Документ за идентификација: <br><br> <p class="text-center">{{ $form_data->document_id }}</p></td>
+            <td colspan="2">Документ за идентификација: <br><br> <p class="text-center">{{ $form_data->exchange_id }}</p></td>
             <td>Овластено лице <br><br> <p class="text-center">{{ $form_data->organization->owner->first_name }} {{ $form_data->organization->owner->last_name }}</p> </td>
         </tr>
     </table>
