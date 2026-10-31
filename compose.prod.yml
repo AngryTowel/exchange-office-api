@@ -1,0 +1,44 @@
+name: menuvacnica-api
+
+services:
+  app:
+    build: .
+    image: exchange-office-api:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      AUTORUN_ENABLED: "true"
+      AUTORUN_LARAVEL_STORAGE_LINK: "false"
+      PHP_OPCACHE_ENABLE: "1"
+      HEALTHCHECK_PATH: /up
+    networks:
+      - proxy
+      - data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.exchange-api.rule=Host(`${APP_HOST}`)
+      - traefik.http.routers.exchange-api.entrypoints=websecure
+      - traefik.http.services.exchange-api.loadbalancer.server.port=8080
+
+  scheduler:
+    image: exchange-office-api:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PHP_OPCACHE_ENABLE: "1"
+    command: ["php", "/var/www/html/artisan", "schedule:work"]
+    stop_signal: SIGTERM
+    healthcheck:
+      test: ["CMD", "healthcheck-schedule"]
+      start_period: 10s
+    depends_on:
+      app:
+        condition: service_healthy
+    networks:
+      - data
+
+networks:
+  proxy:
+    external: true
+  data:
+    external: true
